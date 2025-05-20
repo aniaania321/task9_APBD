@@ -1,4 +1,5 @@
 using Application;
+using Microsoft.EntityFrameworkCore;
 using Models.DTOs;
 using Models.Models;
 using Repositories;
@@ -7,8 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-builder.Services.AddDbContext<_2019sbdContext>();
+builder.Services.AddDbContext<_2019sbdContext>(options => options.UseSqlServer(connectionString));
+
 builder.Services.AddScoped<IDeviceRepository, DeviceRepository>();
 builder.Services.AddScoped<IDeviceService, DeviceService>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
